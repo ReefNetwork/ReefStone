@@ -3,7 +3,7 @@ namespace ree_jp\reef_stone;
 
 use pocketmine\plugin\PluginBase;
 
-class Plugin extends PluginBase
+class ReefStonePlugin extends PluginBase
 {
 
     public function onEnable(): void
