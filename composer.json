@@ -10,11 +10,17 @@
     }
   ],
   "require": {
+    "pocketmine/pocketmine-mp": "4.*",
+    "tedo0627/redstone_circuit": "dev-master"
   },
   "repositories": [
     {
       "type": "vcs",
       "url": "https://github.com/pmmp/PocketMine-MP.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/ReefNetwork/RedstoneCircuit"
     }
   ]
 }

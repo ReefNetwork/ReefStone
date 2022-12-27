@@ -1,18 +1,17 @@
 <?php
-namespace ree_jp\template;
+namespace ree_jp\reef_stone;
 
 use pocketmine\plugin\PluginBase;
 
 class Plugin extends PluginBase
 {
-    private const NOTICE = "§a>> ";
-    
-    public function onEnable()
+
+    public function onEnable(): void
     {
         parent::onEnable();
     }
-    
-    public function onDisable()
+
+    public function onDisable(): void
     {
         parent::onDisable();
     }
