@@ -1,5 +1,5 @@
 {
-  "name": "ree_jp/template",
+  "name": "ree_jp/reef_stone",
   "description": "PocketMine-MP plugin",
   "minimum-stability": "stable",
   "license": "unlicense",
@@ -11,7 +11,9 @@
   ],
   "require": {
     "pocketmine/pocketmine-mp": "4.*",
-    "tedo0627/redstone_circuit": "dev-master"
+    "tedo0627/redstone_circuit": "dev-master",
+    "customies_devs/customies": "dev-master",
+    "bbo51dog/bboform": "2.0.*"
   },
   "repositories": [
     {
@@ -20,7 +22,15 @@
     },
     {
       "type": "vcs",
-      "url": "https://github.com/ReefNetwork/RedstoneCircuit"
+      "url": "https://github.com/ReefNetwork/RedstoneCircuit.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/ReefNetwork/Customies.git"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/bbo51dog/BboForm"
     }
   ]
 }
