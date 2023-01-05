@@ -24,7 +24,6 @@ class BlockRedstoneWirelessSend extends Opaque implements IRedstoneComponent, IL
 {
     public Vector3|null $target = null;
 
-    use AnalogRedstoneSignalEmitterTrait;
     use RedstoneComponentTrait;
 
     public function onBreak(Item $item, ?Player $player = null): bool
@@ -41,26 +40,26 @@ class BlockRedstoneWirelessSend extends Opaque implements IRedstoneComponent, IL
             $block = $this->getSide($face);
             $power = max($power, BlockPowerHelper::getWeakPower($block, $face));
         }
-        if ($power === $this->getOutputSignalStrength()) return;
-        $this->setOutputSignalStrength($power);
-        $this->sendPower();
+        $this->sendPower($power);
     }
 
-    private function sendPower(): void
+    private function sendPower(int $power): void
     {
         $this->target = WirelessStore::$instance->get($this);
         if ($this->target == null) return;
         $receive = $this->getPosition()->getWorld()->getBlock($this->target);
         if (!$receive instanceof BlockRedstoneWirelessReceive) return;
-        $receive->setOutputSignalStrength($this->getOutputSignalStrength());
+        if ($receive->getSignal() === $power) return;
+
+        $receive->setSignal($power);
         BlockUpdateHelper::updateAroundRedstone($receive);
     }
 
     private function updateTarget(Vector3 $target): void
     {
         $this->target = $target;
-        WirelessStore::$instance->save($this);
-        $this->sendPower();
+        WirelessStore::$instance->change($this);
+        $this->onRedstoneUpdate();
     }
 
     public function isConnect(int $face): bool
@@ -73,9 +72,9 @@ class BlockRedstoneWirelessSend extends Opaque implements IRedstoneComponent, IL
         if ($player != null) {
             if (!ReefStonePlugin::coolTime($player->getXuid())) return true;
             $this->target = WirelessStore::$instance->get($this);
-            $inputX = new Input("レッドストーン信号を受け取るブロックのX座標を入力してください", "数字", $this->target?->x);
-            $inputY = new Input("レッドストーン信号を受け取るブロックのY座標を入力してください", "数字", $this->target?->y);
-            $inputZ = new Input("レッドストーン信号を受け取るブロックのZ座標を入力してください", "数字", $this->target?->z);
+            $inputX = new Input("レッドストーン信号を受け取るブロックのX座標を入力してください", "数字", $this->target ? $this->target->x : "");
+            $inputY = new Input("レッドストーン信号を受け取るブロックのY座標を入力してください", "数字", $this->target ? $this->target->y : "");
+            $inputZ = new Input("レッドストーン信号を受け取るブロックのZ座標を入力してください", "数字", $this->target ? $this->target->z : "");
             $form = (new ClosureCustomForm(function () use ($inputX, $inputY, $inputZ, $player): void {
                 $this->updateTarget(new Vector3(intval($inputX->getValue()), intval($inputY->getValue()), intval($inputZ->getValue())));
                 $player->sendMessage(intval($inputX->getValue()) . ":" . intval($inputY->getValue()) . ":" . intval($inputZ->getValue()) . "に座標が設定されました");

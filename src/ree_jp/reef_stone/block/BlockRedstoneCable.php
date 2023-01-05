@@ -2,11 +2,15 @@
 
 namespace ree_jp\reef_stone\block;
 
+use pocketmine\block\BlockBreakInfo;
+use pocketmine\block\BlockIdentifier;
 use pocketmine\block\Opaque;
 use pocketmine\block\RedstoneWire;
 use pocketmine\block\Slab;
 use pocketmine\block\Stair;
 use pocketmine\block\utils\AnalogRedstoneSignalEmitterTrait;
+use pocketmine\block\utils\ColorInMetadataTrait;
+use pocketmine\block\utils\DyeColor;
 use pocketmine\block\utils\SlabType;
 use pocketmine\block\VanillaBlocks;
 use pocketmine\item\Item;
@@ -26,7 +30,8 @@ class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkReds
     use AnalogRedstoneSignalEmitterTrait;
     use RedstoneComponentTrait;
 
-    public function onPostPlace(): void {
+    public function onPostPlace(): void
+    {
         $this->calculatePower();
     }
 
@@ -36,13 +41,15 @@ class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkReds
         return true;
     }
 
-    public function onBreak(Item $item, ?Player $player = null): bool {
+    public function onBreak(Item $item, ?Player $player = null): bool
+    {
         $bool = parent::onBreak($item, $player);
         BlockUpdateHelper::updateAroundRedstone($this);
         return $bool;
     }
 
-    public function onNearbyBlockChange(): void {
+    public function onNearbyBlockChange(): void
+    {
         parent::onNearbyBlockChange();
 
         if ($this->getPosition()->getWorld()->getBlock($this->getPosition()) === VanillaBlocks::AIR()) return;
@@ -50,20 +57,25 @@ class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkReds
         BlockUpdateHelper::updateAroundRedstone($this);
     }
 
-    public function getWeakPower(int $face): int {
+    public function getWeakPower(int $face): int
+    {
         return $this->getOutputSignalStrength();
     }
 
-    public function onRedstoneUpdate(): void {
+    public function onRedstoneUpdate(): void
+    {
         $this->calculatePower();
     }
 
-    private function calculatePower(): bool {
+    private function calculatePower(): bool
+    {
         $power = 0;
         for ($face = 0; $face < 6; $face++) {
             $block = $this->getSide($face);
             if ($block instanceof BlockRedstoneCable) {
-                $power = max($power, $block->getOutputSignalStrength() - 1);
+                if ($block->idInfo->getBlockId() === $this->idInfo->getBlockId()) {
+                    $power = max($power, $block->getOutputSignalStrength() - 1);
+                }
                 continue;
             }
 
@@ -87,7 +99,8 @@ class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkReds
         return true;
     }
 
-    public function isConnect(int $face): bool {
+    public function isConnect(int $face): bool
+    {
         return true;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace ree_jp\reef_stone;
 
+use customiesdevs\customies\block\CustomiesBlockFactory;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
 use pocketmine\math\Facing;
