@@ -6,7 +6,6 @@ use customiesdevs\customies\block\CustomiesBlockFactory;
 use customiesdevs\customies\item\CreativeInventoryInfo;
 use pocketmine\block\BlockBreakInfo;
 use pocketmine\block\BlockIdentifier;
-use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use ree_jp\reef_stone\block\BlockRedstoneCable;
@@ -30,6 +29,7 @@ class ReefStonePlugin extends PluginBase
     private function init(): void
     {
         SignalStore::init($this->getDataFolder() . "signal_store.json");
+        CableSignalManager::init();
 
         $creativeInfo = new CreativeInventoryInfo(CreativeInventoryInfo::CATEGORY_ITEMS, CreativeInventoryInfo::NONE);
 
