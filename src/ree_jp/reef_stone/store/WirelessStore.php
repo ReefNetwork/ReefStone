@@ -13,6 +13,7 @@ use RuntimeException;
 class WirelessStore extends JsonStore
 {
     static WirelessStore $instance;
+
     static function init(string $file): void
     {
         self::$instance = new self($file);
@@ -27,8 +28,8 @@ class WirelessStore extends JsonStore
 
     public function get(BlockRedstoneWirelessSend $bl): ?Vector3
     {
-        $value = $this->data[$this->createKey($bl->getPosition())];
-        if ($value) {
+        if (isset($this->data[$this->createKey($bl->getPosition())])) {
+            $value = $this->data[$this->createKey($bl->getPosition())];
             return new Vector3($value["x"], $value["y"], $value["z"]);
         }
         return null;

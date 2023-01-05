@@ -22,9 +22,8 @@ class SignalStore extends JsonStore
 
     public function get(Position $pos): int
     {
-        $value = $this->data[$this->createKey($pos)];
-        if ($value) {
-            return $value;
+        if (isset($this->data[$this->createKey($pos)])) {
+            return $this->data[$this->createKey($pos)];
         }
         return 0;
     }
