@@ -23,7 +23,9 @@ class ReefStonePlugin extends PluginBase
     {
         self::$plugin = $this;
         $this->init();
-        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+
+        //デバッグ用
+//        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
     private function init(): void
