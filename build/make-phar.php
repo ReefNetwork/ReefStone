@@ -4,7 +4,7 @@
  * Make phar by https://github.com/DaisukeDaisuke/BehaviorPackLoader/blob/master/build/make-phar.php
  */
 
-$file_phar = "PMMPPlugin.phar";
+$file_phar = "ReefStone.phar";
 if (file_exists($file_phar)) {
     echo "Phar file already exists, overwriting...";
     echo PHP_EOL;
@@ -16,7 +16,7 @@ $dir = getcwd() . DIRECTORY_SEPARATOR;
 
 $exclusions = ["github", ".gitignore", "composer.json", "composer.lock", "build", ".git"];
 
-foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir)) as $path => $file) {
+foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir)) as $path => $file) {
     $bool = true;
     foreach ($exclusions as $exclusion) {
         if (strpos($path, $exclusion) !== false) {
@@ -37,17 +37,17 @@ foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($dir)) a
 echo "Compressing..." . PHP_EOL;
 $phar = new Phar($file_phar, 0);
 $phar->startBuffering();
-$phar->setSignatureAlgorithm(\Phar::SHA1);
-$phar->buildFromIterator(new \ArrayIterator($files));
+$phar->setSignatureAlgorithm(Phar::SHA1);
+$phar->buildFromIterator(new ArrayIterator($files));
 $phar->setStub("<?php __HALT_COMPILER(); ?>");
 
 if (isset($argv[1]) && $argv[1] === "enableCompressAll") {
     $phar->compressFiles(Phar::GZ);
 } else {
     foreach ($phar as $file => $finfo) {
-        /** @var \PharFileInfo $finfo */
+        /** @var PharFileInfo $finfo */
         if ($finfo->getSize() > (1024 * 512)) {
-            $finfo->compress(\Phar::GZ);
+            $finfo->compress(Phar::GZ);
         }
     }
 }
