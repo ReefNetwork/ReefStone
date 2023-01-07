@@ -12,6 +12,7 @@ use tedo0627\redstonecircuit\block\BlockUpdateHelper;
 use tedo0627\redstonecircuit\block\ILinkRedstoneWire;
 use tedo0627\redstonecircuit\block\IRedstoneComponent;
 use tedo0627\redstonecircuit\block\RedstoneComponentTrait;
+use tedo0627\redstonecircuit\block\transmission\BlockRedstoneWire;
 
 class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkRedstoneWire
 {
@@ -54,7 +55,7 @@ class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkReds
         $power = 0;
         for ($face = 0; $face < 6; $face++) {
             $block = $this->getSide($face);
-            if (!$block instanceof BlockRedstoneCable) {
+            if (!$block instanceof BlockRedstoneCable && !$block instanceof BlockRedstoneWire) {
                 $power = max($power, BlockPowerHelper::getWeakPower($block, $face));
             }
         }
