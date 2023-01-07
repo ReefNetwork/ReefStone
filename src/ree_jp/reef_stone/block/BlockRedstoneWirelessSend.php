@@ -4,14 +4,11 @@ namespace ree_jp\reef_stone\block;
 
 use bbo51dog\bboform\element\Input;
 use bbo51dog\bboform\form\ClosureCustomForm;
-use bbo51dog\bboform\form\CustomForm;
-use bbo51dog\bboform\form\SimpleForm;
 use pocketmine\block\Opaque;
-use pocketmine\block\utils\AnalogRedstoneSignalEmitterTrait;
-use pocketmine\block\VanillaBlocks;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
+use ree_jp\reef_stone\event\BlockRedstoneWirelessSignalUpdate;
 use ree_jp\reef_stone\ReefStonePlugin;
 use ree_jp\reef_stone\store\WirelessStore;
 use tedo0627\redstonecircuit\block\BlockPowerHelper;
@@ -50,6 +47,11 @@ class BlockRedstoneWirelessSend extends Opaque implements IRedstoneComponent, IL
         $receive = $this->getPosition()->getWorld()->getBlock($this->target);
         if (!$receive instanceof BlockRedstoneWirelessReceive) return;
         if ($receive->getSignal() === $power) return;
+
+        $ev = new BlockRedstoneWirelessSignalUpdate($this, $receive, $power, $receive->getSignal());
+        $ev->call();
+        if ($ev->isCancelled()) return;
+        $power = $ev->getNewSignal();
 
         $receive->setSignal($power);
         BlockUpdateHelper::updateAroundRedstone($receive);
