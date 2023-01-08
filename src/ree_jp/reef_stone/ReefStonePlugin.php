@@ -20,7 +20,7 @@ class ReefStonePlugin extends PluginBase
     private static array $coolTime = [];
     public static ReefStonePlugin $plugin;
 
-    public function onLoad(): void
+    public function onEnable(): void
     {
         self::$plugin = $this;
         $this->init();
