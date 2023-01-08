@@ -13,13 +13,14 @@ use ree_jp\reef_stone\block\BlockRedstoneWirelessReceive;
 use ree_jp\reef_stone\block\BlockRedstoneWirelessSend;
 use ree_jp\reef_stone\store\SignalStore;
 use ree_jp\reef_stone\store\WirelessStore;
+use tedo0627\redstonecircuit\RedstoneCircuit;
 
 class ReefStonePlugin extends PluginBase
 {
     private static array $coolTime = [];
     public static ReefStonePlugin $plugin;
 
-    public function onEnable(): void
+    public function onLoad(): void
     {
         self::$plugin = $this;
         $this->init();
@@ -74,6 +75,7 @@ class ReefStonePlugin extends PluginBase
         CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneWirelessReceive(new BlockIdentifier($id, 0),
             "Redstone Wireless Receive", BlockBreakInfo::instant()), "reefd_stone:redstone_wireless_receive", null, $creativeInfo);
 
+        RedstoneCircuit::registerMappings();
     }
 
     static function coolTime(string $xuid): bool
