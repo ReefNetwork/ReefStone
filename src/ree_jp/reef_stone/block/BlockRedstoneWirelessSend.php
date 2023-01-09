@@ -45,15 +45,20 @@ class BlockRedstoneWirelessSend extends ReefdStoneOpaque implements IRedstoneCom
         if ($this->target == null) return;
         $receive = $this->getPosition()->getWorld()->getBlock($this->target);
         if (!$receive instanceof BlockRedstoneWirelessReceive) return;
-        if ($receive->getSignal() === $power) return;
+        if ($receive->getSignal($this->createKey()) === $power) return;
 
         $ev = new BlockRedstoneWirelessSignalUpdate($this, $receive, $power, $receive->getSignal());
         $ev->call();
         if ($ev->isCancelled()) return;
         $power = $ev->getNewSignal();
 
-        $receive->setSignal($power, $this->getPosition()->getX() . ":" . $this->getPosition()->getY() . ":" . $this->getPosition()->getZ());
+        $receive->setSignal($power, $this->createKey());
         BlockUpdateHelper::updateAroundRedstone($receive);
+    }
+
+    private function createKey(): string
+    {
+        return $this->getPosition()->getX() . ":" . $this->getPosition()->getY() . ":" . $this->getPosition()->getZ();
     }
 
     private function updateTarget(Vector3 $target): void

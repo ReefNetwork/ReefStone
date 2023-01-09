@@ -20,9 +20,13 @@ class BlockRedstoneWirelessReceive extends ReefdStoneOpaque implements IRedstone
         SignalStore::$instance->change($this->getPosition(), $signalStrength, $key);
     }
 
-    public function getSignal(): int
+    public function getSignal(?string $key = null): int
     {
-        return SignalStore::$instance->getMax($this->getPosition());
+        if ($key === null) {
+            return SignalStore::$instance->getMax($this->getPosition());
+        } else {
+            return SignalStore::$instance->get($this->getPosition(), $key);
+        }
     }
 
     public function onPostPlace(): void

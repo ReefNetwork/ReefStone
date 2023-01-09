@@ -32,6 +32,14 @@ class SignalStore extends JsonStore
         return $maxPower;
     }
 
+    public function get(Position $pos, string $key): int
+    {
+        if (isset($this->data[$this->createKey($pos)]) && isset($this->data[$this->createKey($pos)][$key])) {
+            return $this->data[$this->createKey($pos)][$key];
+        }
+        return 0;
+    }
+
     public function remove(Position $pos): void
     {
         unset($this->data[$this->createKey($pos)]);
