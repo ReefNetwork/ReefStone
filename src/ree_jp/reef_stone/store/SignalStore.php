@@ -18,7 +18,6 @@ class SignalStore extends JsonStore
         if (!isset($this->data[$this->createKey($pos)])) $this->data[$this->createKey($pos)] = [];
 
         $this->data[$this->createKey($pos)][$key] = $signal;
-        $this->saveData();
     }
 
     public function getMax(Position $pos): int
