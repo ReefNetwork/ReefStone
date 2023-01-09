@@ -15,14 +15,14 @@ class BlockRedstoneWirelessReceive extends ReefdStoneOpaque implements IRedstone
     use LinkRedstoneWireTrait;
     use RedstoneComponentTrait;
 
-    public function setSignal(int $signalStrength): void
+    public function setSignal(int $signalStrength, string $key): void
     {
-        SignalStore::$instance->change($this->getPosition(), $signalStrength);
+        SignalStore::$instance->change($this->getPosition(), $signalStrength, $key);
     }
 
     public function getSignal(): int
     {
-        return SignalStore::$instance->get($this->getPosition());
+        return SignalStore::$instance->getMax($this->getPosition());
     }
 
     public function onPostPlace(): void

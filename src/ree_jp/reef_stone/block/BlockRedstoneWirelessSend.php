@@ -52,7 +52,7 @@ class BlockRedstoneWirelessSend extends ReefdStoneOpaque implements IRedstoneCom
         if ($ev->isCancelled()) return;
         $power = $ev->getNewSignal();
 
-        $receive->setSignal($power);
+        $receive->setSignal($power, $this->getPosition()->getX() . ":" . $this->getPosition()->getY() . ":" . $this->getPosition()->getZ());
         BlockUpdateHelper::updateAroundRedstone($receive);
     }
 

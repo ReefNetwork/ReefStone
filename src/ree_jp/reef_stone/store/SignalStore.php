@@ -2,30 +2,34 @@
 
 namespace ree_jp\reef_stone\store;
 
-use pocketmine\math\Vector3;
 use pocketmine\world\Position;
-use RuntimeException;
 
 class SignalStore extends JsonStore
 {
     static SignalStore $instance;
+
     static function init(string $file): void
     {
         self::$instance = new self($file);
     }
 
-    public function change(Position $pos, int $signal): void
+    public function change(Position $pos, int $signal, string $key = "key"): void
     {
-        $this->data[$this->createKey($pos)] = $signal;
+        if (!isset($this->data[$this->createKey($pos)])) $this->data[$this->createKey($pos)] = [];
+
+        $this->data[$this->createKey($pos)][$key] = $signal;
         $this->saveData();
     }
 
-    public function get(Position $pos): int
+    public function getMax(Position $pos): int
     {
+        $maxPower = 0;
         if (isset($this->data[$this->createKey($pos)])) {
-            return $this->data[$this->createKey($pos)];
+            foreach ($this->data[$this->createKey($pos)] as $power) {
+                $maxPower = max($maxPower, $power);
+            }
         }
-        return 0;
+        return $maxPower;
     }
 
     public function remove(Position $pos): void
