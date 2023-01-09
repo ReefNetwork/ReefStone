@@ -4,7 +4,6 @@ namespace ree_jp\reef_stone\block;
 
 use bbo51dog\bboform\element\Input;
 use bbo51dog\bboform\form\ClosureCustomForm;
-use pocketmine\block\Opaque;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
@@ -17,7 +16,7 @@ use tedo0627\redstonecircuit\block\ILinkRedstoneWire;
 use tedo0627\redstonecircuit\block\IRedstoneComponent;
 use tedo0627\redstonecircuit\block\RedstoneComponentTrait;
 
-class BlockRedstoneWirelessSend extends Opaque implements IRedstoneComponent, ILinkRedstoneWire
+class BlockRedstoneWirelessSend extends ReefdStoneOpaque implements IRedstoneComponent, ILinkRedstoneWire
 {
     public Vector3|null $target = null;
 

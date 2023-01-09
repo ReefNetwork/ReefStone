@@ -2,7 +2,6 @@
 
 namespace ree_jp\reef_stone\block;
 
-use pocketmine\block\Opaque;
 use pocketmine\item\Item;
 use pocketmine\player\Player;
 use ree_jp\reef_stone\CableConnection;
@@ -14,7 +13,7 @@ use tedo0627\redstonecircuit\block\IRedstoneComponent;
 use tedo0627\redstonecircuit\block\RedstoneComponentTrait;
 use tedo0627\redstonecircuit\block\transmission\BlockRedstoneWire;
 
-class BlockRedstoneCable extends Opaque implements IRedstoneComponent, ILinkRedstoneWire
+class BlockRedstoneCable extends ReefdStoneOpaque implements IRedstoneComponent, ILinkRedstoneWire
 {
     use RedstoneComponentTrait;
 

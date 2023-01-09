@@ -9,9 +9,10 @@ use pocketmine\block\BlockIdentifier;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use ree_jp\reef_stone\block\BlockRedstoneCable;
+use ree_jp\reef_stone\block\BlockRedstoneWirelessReceive;
+use ree_jp\reef_stone\block\BlockRedstoneWirelessSend;
 use ree_jp\reef_stone\store\SignalStore;
 use ree_jp\reef_stone\store\WirelessStore;
-use tedo0627\redstonecircuit\block\BlockTable;
 
 class ReefStonePlugin extends PluginBase
 {
@@ -23,8 +24,7 @@ class ReefStonePlugin extends PluginBase
         self::$plugin = $this;
         $this->init();
 
-        //デバッグ用
-//        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
     private function init(): void
@@ -53,14 +53,14 @@ class ReefStonePlugin extends PluginBase
                      new CustomiesBlock("Redstone Cable Red", "reefd_stone:redstone_cable_red", BlockRedstoneCable::class),
                      new CustomiesBlock("Redstone Cable Black", "reefd_stone:redstone_cable_black", BlockRedstoneCable::class),
 
-                     new CustomiesBlock("Redstone Wireless Send", "reefd_stone:redstone_wireless_send", BlockRedstoneCable::class),
-                     new CustomiesBlock("Redstone Wireless Receive", "reefd_stone:redstone_wireless_receive", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Wireless Send", "reefd_stone:redstone_wireless_send", BlockRedstoneWirelessSend::class),
+                     new CustomiesBlock("Redstone Wireless Receive", "reefd_stone:redstone_wireless_receive", BlockRedstoneWirelessReceive::class),
 
                  ] as $customies) {
-            CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new $customies->class(new BlockIdentifier($id, 0),
-                $customies->name, BlockBreakInfo::instant()), $customies->identifier, null, $creativeInfo);
-            $block = CustomiesBlockFactory::getInstance()->get($customies->identifier);
-            BlockTable::getInstance()->registerBlock($customies->identifier, $block->getIdInfo()->getBlockId());
+            $class = $customies->class;
+            $name = $customies->name;
+            CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new $class(new BlockIdentifier($id, 0),
+                $name, BlockBreakInfo::instant()), $customies->identifier, null, $creativeInfo);
         }
     }
 

@@ -2,28 +2,48 @@
 
 namespace ree_jp\reef_stone;
 
-use customiesdevs\customies\block\CustomiesBlockFactory;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerInteractEvent;
-use pocketmine\math\Facing;
-use tedo0627\redstonecircuit\block\IRedstoneComponent;
+use ree_jp\reef_stone\block\ReefdStoneOpaque;
+use tedo0627\redstonecircuit\event\BlockPistonExtendEvent;
+use tedo0627\redstonecircuit\event\BlockPistonRetractEvent;
 
 class EventListener implements Listener
 {
     const color = [1, 2, 3, 4, 5, 6, 7, 8, 9, "a", "b", "c", "d", "e", "f", "g", "l", "o"];
 
-    public function onTouch(PlayerInteractEvent $ev): void
+    //デバッグ用
+//    public function onTouch(PlayerInteractEvent $ev): void
+//    {
+//        $p = $ev->getPlayer();
+//        $bl = $ev->getBlock();
+//        $color = "§" . self::color[mt_rand(0, 17)];
+//        $p->sendMessage("$color---------");
+//        if ($bl instanceof IRedstoneComponent) {
+//            $p->sendMessage("WEAK" . $bl->getWeakPower(Facing::UP) . " : STRONG" . $bl->getStrongPower(Facing::UP));
+//        }
+//        if (method_exists($bl, "getOutputSignalStrength")) {
+//            $p->sendMessage("output: ".$bl->getOutputSignalStrength());
+//        }
+//        $p->sendMessage("$color---------");
+//    }
+
+    public function onPushPiston(BlockPistonExtendEvent $ev): void
     {
-        $p = $ev->getPlayer();
-        $bl = $ev->getBlock();
-        $color = "§" . self::color[mt_rand(0, 17)];
-        $p->sendMessage("$color---------");
-        if ($bl instanceof IRedstoneComponent) {
-            $p->sendMessage("WEAK" . $bl->getWeakPower(Facing::UP) . " : STRONG" . $bl->getStrongPower(Facing::UP));
+        $this->onPiston($ev);
+    }
+
+    public function onPullPiston(BlockPistonRetractEvent $ev): void
+    {
+        $this->onPiston($ev);
+    }
+
+    private function onPiston(BlockPistonExtendEvent|BlockPistonRetractEvent $ev): void
+    {
+        foreach ($ev->getMoveBlocks() as $bl) {
+            if ($bl instanceof ReefdStoneOpaque) {
+                $ev->cancel();
+                return;
+            }
         }
-        if (method_exists($bl, "getOutputSignalStrength")) {
-            $p->sendMessage("output: ".$bl->getOutputSignalStrength());
-        }
-        $p->sendMessage("$color---------");
     }
 }
