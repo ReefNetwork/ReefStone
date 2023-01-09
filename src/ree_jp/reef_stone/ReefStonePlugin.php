@@ -9,11 +9,9 @@ use pocketmine\block\BlockIdentifier;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use ree_jp\reef_stone\block\BlockRedstoneCable;
-use ree_jp\reef_stone\block\BlockRedstoneWirelessReceive;
-use ree_jp\reef_stone\block\BlockRedstoneWirelessSend;
 use ree_jp\reef_stone\store\SignalStore;
 use ree_jp\reef_stone\store\WirelessStore;
-use tedo0627\redstonecircuit\RedstoneCircuit;
+use tedo0627\redstonecircuit\block\BlockTable;
 
 class ReefStonePlugin extends PluginBase
 {
@@ -31,51 +29,39 @@ class ReefStonePlugin extends PluginBase
 
     private function init(): void
     {
-        SignalStore::init($this->getDataFolder() . "signal_store.json");
         CableSignalManager::init();
+        SignalStore::init($this->getDataFolder() . "signal_store.json");
+        WirelessStore::init($this->getDataFolder() . "wireless_block.json");
 
         $creativeInfo = new CreativeInventoryInfo(CreativeInventoryInfo::CATEGORY_ITEMS, CreativeInventoryInfo::NONE);
 
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable White", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_white", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Orange", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_orange", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Magenta", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_magenta", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Light Blue", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_light_blue", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Yellow", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_yellow", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Lime", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_lime", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Pink", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_pink", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Gray", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_gray", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Light Gray", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_light_gray", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Cyan", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_cyan", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Purple", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_purple", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Blue", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_blue", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Brown", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_brown", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Green", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_green", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Red", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_red", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneCable(new BlockIdentifier($id, 0),
-            "Redstone Cable Black", BlockBreakInfo::instant()), "reefd_stone:redstone_cable_black", null, $creativeInfo);
+        foreach ([
+                     new CustomiesBlock("Redstone Cable White", "reefd_stone:redstone_cable_white", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Orange", "reefd_stone:redstone_cable_orange", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Magenta", "reefd_stone:redstone_cable_magenta", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Light Blue", "reefd_stone:redstone_cable_light_blue", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Yellow", "reefd_stone:redstone_cable_yellow", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Lime", "reefd_stone:redstone_cable_lime", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Pink", "reefd_stone:redstone_cable_pink", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Gray", "reefd_stone:redstone_cable_gray", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Light Gray", "reefd_stone:redstone_cable_light_gray", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Cyan", "reefd_stone:redstone_cable_cyan", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Purple", "reefd_stone:redstone_cable_purple", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Blue", "reefd_stone:redstone_cable_blue", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Brown", "reefd_stone:redstone_cable_brown", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Green", "reefd_stone:redstone_cable_green", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Red", "reefd_stone:redstone_cable_red", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Cable Black", "reefd_stone:redstone_cable_black", BlockRedstoneCable::class),
 
-        WirelessStore::init($this->getDataFolder() . "wireless_block.json");
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneWirelessSend(new BlockIdentifier($id, 0),
-            "Redstone Wireless Send", BlockBreakInfo::instant()), "reefd_stone:redstone_wireless_send", null, $creativeInfo);
-        CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new BlockRedstoneWirelessReceive(new BlockIdentifier($id, 0),
-            "Redstone Wireless Receive", BlockBreakInfo::instant()), "reefd_stone:redstone_wireless_receive", null, $creativeInfo);
+                     new CustomiesBlock("Redstone Wireless Send", "reefd_stone:redstone_wireless_send", BlockRedstoneCable::class),
+                     new CustomiesBlock("Redstone Wireless Receive", "reefd_stone:redstone_wireless_receive", BlockRedstoneCable::class),
 
-        RedstoneCircuit::registerMappings();
+                 ] as $customies) {
+            CustomiesBlockFactory::getInstance()->registerBlock(fn(int $id) => new $customies->class(new BlockIdentifier($id, 0),
+                $customies->name, BlockBreakInfo::instant()), $customies->identifier, null, $creativeInfo);
+            $block = CustomiesBlockFactory::getInstance()->get($customies->identifier);
+            BlockTable::getInstance()->registerBlock($customies->identifier, $block->getIdInfo()->getBlockId());
+        }
     }
 
     static function coolTime(string $xuid): bool
@@ -94,5 +80,12 @@ class ReefStonePlugin extends PluginBase
     public function onDisable(): void
     {
         SignalStore::$instance->saveData();
+    }
+}
+
+class CustomiesBlock
+{
+    public function __construct(public string $name, public string $identifier, public string $class)
+    {
     }
 }
