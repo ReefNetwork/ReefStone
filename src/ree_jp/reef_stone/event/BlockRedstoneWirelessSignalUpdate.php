@@ -2,17 +2,17 @@
 
 namespace ree_jp\reef_stone\event;
 
-use pocketmine\block\Block;
 use pocketmine\event\block\BlockEvent;
 use pocketmine\event\Cancellable;
 use pocketmine\event\CancellableTrait;
 use ree_jp\reef_stone\block\BlockRedstoneWirelessReceive;
+use ree_jp\reef_stone\block\BlockRedstoneWirelessSend;
 
 class BlockRedstoneWirelessSignalUpdate extends BlockEvent implements Cancellable
 {
     use CancellableTrait;
 
-    public function __construct(Block $block, private BlockRedstoneWirelessReceive $target, private int $newSignal, private int $oldSignal)
+    public function __construct(BlockRedstoneWirelessSend $block, private BlockRedstoneWirelessReceive $target, private int $newSignal, private int $oldSignal)
     {
         parent::__construct($block);
     }
