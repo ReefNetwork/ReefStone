@@ -72,12 +72,14 @@ class BlockRedstoneCable extends ReefdStoneOpaque implements IRedstoneComponent,
         $masterConnection = null;
         for ($face = 0; $face < 6; $face++) {
             $block = $this->getSide($face);
-            if (!$block instanceof BlockRedstoneCable || ($block->idInfo->getBlockId() !== $this->idInfo->getBlockId())) continue;
+            if (!$block instanceof BlockRedstoneCable) continue;
+
+            if ($block->idInfo->getBlockId() !== $this->idInfo->getBlockId()) {
+                if (!$block instanceof BlockRedstoneCableBind && !$this instanceof BlockRedstoneCableBind) continue;
+            }
 
             $connection = CableSignalManager::$instance->getConnection($block->getPosition());
-            if (!$connection instanceof CableConnection) {
-                continue;
-            }
+            if (!$connection instanceof CableConnection) continue;
 
             if ($masterConnection === null) {
                 $masterConnection = $connection;

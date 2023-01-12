@@ -9,6 +9,7 @@ use pocketmine\block\BlockIdentifier;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
 use ree_jp\reef_stone\block\BlockRedstoneCable;
+use ree_jp\reef_stone\block\BlockRedstoneCableBind;
 use ree_jp\reef_stone\block\BlockRedstoneWirelessReceive;
 use ree_jp\reef_stone\block\BlockRedstoneWirelessSend;
 use ree_jp\reef_stone\store\SignalStore;
@@ -56,6 +57,7 @@ class ReefStonePlugin extends PluginBase
                      new CustomiesBlock("Redstone Wireless Send", "reefd_stone:redstone_wireless_send", BlockRedstoneWirelessSend::class),
                      new CustomiesBlock("Redstone Wireless Receive", "reefd_stone:redstone_wireless_receive", BlockRedstoneWirelessReceive::class),
 
+                     new CustomiesBlock("レッドストーンケーブル結合機", "reefd_stone:redstone_cable_bind", BlockRedstoneCableBind::class),
                  ] as $customies) {
             $class = $customies->class;
             $name = $customies->name;
