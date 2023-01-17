@@ -3,10 +3,10 @@
 namespace ree_jp\reef_stone\block;
 
 use customiesdevs\customies\block\permutations\Permutable;
+use customiesdevs\customies\block\permutations\RotatableTrait;
 use pocketmine\item\Item;
 use pocketmine\math\Facing;
 use pocketmine\player\Player;
-use ree_jp\reef_stone\Rotatable3DTrait;
 use tedo0627\redstonecircuit\block\BlockPowerHelper;
 use tedo0627\redstonecircuit\block\BlockUpdateHelper;
 use tedo0627\redstonecircuit\block\ILinkRedstoneWire;
@@ -15,7 +15,7 @@ use tedo0627\redstonecircuit\block\RedstoneComponentTrait;
 
 class BlockRedstoneCableStraight extends ReefdStoneOpaque implements IRedstoneComponent, ILinkRedstoneWire, Permutable
 {
-    use Rotatable3DTrait;
+    use RotatableTrait;
     use RedstoneComponentTrait;
 
     public function isPowerSource(): bool

@@ -8,7 +8,6 @@ use customiesdevs\customies\block\Model;
 use customiesdevs\customies\item\CreativeInventoryInfo;
 use pocketmine\block\BlockBreakInfo;
 use pocketmine\block\BlockIdentifier;
-use pocketmine\math\Facing;
 use pocketmine\math\Vector3;
 use pocketmine\plugin\PluginBase;
 use pocketmine\scheduler\ClosureTask;
@@ -35,10 +34,6 @@ class ReefStonePlugin extends PluginBase
 
     private function init(): void
     {
-        var_dump(Facing::UP);
-        var_dump(Facing::DOWN);
-        var_dump(Facing::NORTH);
-        var_dump(Facing::SOUTH);
         CableSignalManager::init();
         SignalStore::init($this->getDataFolder() . "signal_store.json");
         WirelessStore::init($this->getDataFolder() . "wireless_block.json");
