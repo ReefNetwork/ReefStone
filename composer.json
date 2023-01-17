@@ -9,7 +9,7 @@
       "email": "mail@ree-jp.net"
     }
   ],
-  "require": {
+  "require-dev": {
     "pocketmine/pocketmine-mp": "4.*",
     "tedo0627/redstone_circuit": "dev-master",
     "customies_devs/customies": "dev-master",
