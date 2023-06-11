@@ -34,32 +34,32 @@ trait Rotatable3DTrait
     {
         return [
             (new Permutation("q.block_property('customies:rotation') == 0"))
-                ->withComponent("minecraft:rotation", CompoundTag::create()
+                ->withComponent("minecraft:transformation", CompoundTag::create()
                     ->setFloat("x", -90)
                     ->setFloat("y", 0)
                     ->setFloat("z", 0)),
             (new Permutation("q.block_property('customies:rotation') == 1"))
-                ->withComponent("minecraft:rotation", CompoundTag::create()
+                ->withComponent("minecraft:transformation", CompoundTag::create()
                     ->setFloat("x", 90)
                     ->setFloat("y", 0)
                     ->setFloat("z", 0)),
             (new Permutation("q.block_property('customies:rotation') == 2"))
-                ->withComponent("minecraft:rotation", CompoundTag::create()
+                ->withComponent("minecraft:transformation", CompoundTag::create()
                     ->setFloat("x", 0)
                     ->setFloat("y", 0)
                     ->setFloat("z", 0)),
             (new Permutation("q.block_property('customies:rotation') == 3"))
-                ->withComponent("minecraft:rotation", CompoundTag::create()
+                ->withComponent("minecraft:transformation", CompoundTag::create()
                     ->setFloat("x", 0)
                     ->setFloat("y", 180)
                     ->setFloat("z", 0)),
             (new Permutation("q.block_property('customies:rotation') == 4"))
-                ->withComponent("minecraft:rotation", CompoundTag::create()
+                ->withComponent("minecraft:transformation", CompoundTag::create()
                     ->setFloat("x", 0)
                     ->setFloat("y", 90)
                     ->setFloat("z", 0)),
             (new Permutation("q.block_property('customies:rotation') == 5"))
-                ->withComponent("minecraft:rotation", CompoundTag::create()
+                ->withComponent("minecraft:transformation", CompoundTag::create()
                     ->setFloat("x", 0)
                     ->setFloat("y", 270)
                     ->setFloat("z", 0)),
